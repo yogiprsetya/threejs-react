@@ -1,8 +1,8 @@
 import React from 'react';
-import ThreeJs from './ThreeJs';
+import SceneManager from './SceneManager';
 
 function App() {
-  return <ThreeJs />;
+  return <SceneManager />;
 };
 
 export default App;

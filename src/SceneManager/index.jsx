@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import * as THREE from 'three';
 
-function ThreeJs() {
+function SceneManager() {
   const mount = useRef(null);
   const [fov, setFov] = useState(70);
 
@@ -108,7 +108,7 @@ function ThreeJs() {
     animate();
   }, [])
 
-  return <div className="vis" ref={mount} />
+  return <div className="tour" ref={mount} />
 };
 
-export default ThreeJs;
+export default SceneManager;

@@ -3,14 +3,14 @@ import * as THREE from 'three';
 
 function SceneManager() {
   const mount = useRef(null);
-  const [fov, setFov] = useState(70);
+  const [fov, setFov] = useState(60);
 
   const width = window.innerWidth;
   const height = window.innerHeight;
   const ratio = width / height;
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  const camera = new THREE.PerspectiveCamera(fov, ratio, .1, 1000);
+  const camera = new THREE.PerspectiveCamera(fov, ratio, 0.1, 2000);
   const scene = new THREE.Scene();
   const loader = new THREE.TextureLoader();
 
@@ -22,7 +22,6 @@ function SceneManager() {
   let onPointerDownPointerY;
   let onPointerDownLon;
   let onPointerDownLat;
-  let isUserInteracting = false;
 
   function init() {
     loader.load('/texture/1.jpg', texture => {
@@ -69,7 +68,6 @@ function SceneManager() {
     onPointerDownPointerY = event.clientY;
     onPointerDownLon = lon;
     onPointerDownLat = lat;
-    isUserInteracting = true;
     mount.current.addEventListener('mousemove', onDocumentMouseMove, false);
     mount.current.addEventListener('mouseup', onDocumentMouseUp, false);
   }
@@ -80,7 +78,6 @@ function SceneManager() {
   }
 
   function onDocumentMouseUp(event) {
-    isUserInteracting = false;
     mount.current.removeEventListener('mousemove', onDocumentMouseMove, false);
     mount.current.removeEventListener('mouseup', onDocumentMouseUp, false);
   }

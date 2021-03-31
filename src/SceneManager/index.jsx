@@ -10,8 +10,9 @@ function SceneManager() {
   const ratio = width / height;
 
   const renderer = new THREE.WebGLRenderer({ antialias: true });
-  const camera = new THREE.PerspectiveCamera(fov, ratio, 1, 1000);
+  const camera = new THREE.PerspectiveCamera(fov, ratio, .1, 1000);
   const scene = new THREE.Scene();
+  const loader = new THREE.TextureLoader();
 
   let lon = 0;
   let lat = 0;
@@ -24,13 +25,12 @@ function SceneManager() {
   let isUserInteracting = false;
 
   function init() {
-    const texture = new THREE.TextureLoader().load( '/texture/1.jpg' );
+    loader.load('/texture/1.jpg', texture => {
+      const rt = new THREE.WebGLCubeRenderTarget(texture.image.height);
+      rt.fromEquirectangularTexture(renderer, texture);
+      scene.background = rt;
+    });
 
-    const material = new THREE.MeshBasicMaterial({ map: texture });
-    const geomety = new THREE.SphereGeometry(500, 60, 40);
-    const mesh = new THREE.Mesh(geomety, material);
-    mesh.geometry.scale( - 1, 1, 1 );
-    scene.add(mesh);
     renderer.setSize(width, height);
 
     mount.current.addEventListener('mousedown', onDocumentMouseDown, false);
